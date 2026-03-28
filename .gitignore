@@ -1,0 +1,12 @@
+venv/
+__pycache__/
+*.pyc
+.DS_Store
+
+encounters.csv
+patients.csv
+diagnosis.csv
+social_determinants.csv
+*.mp4
+*.csv
+*.xlsx

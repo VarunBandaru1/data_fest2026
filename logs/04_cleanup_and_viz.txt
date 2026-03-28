@@ -1,0 +1,271 @@
+✓ Imports OK
+
+Loading data...
+  journey_pat : (46017, 36)
+  soc_det     : (3977901, 5)
+
+--- Fix 1: Surveyed vs Unsurveyed ---
+Journeys from surveyed patients   : 35,835  (77.9%)
+Journeys from unsurveyed patients : 10,182  (22.1%)
+
+Among surveyed patients:
+  With 0 SDOH risks : 30,282
+  With 1+ SDOH risks: 5,553
+
+--- ED rate (surveyed patients only, honest comparison) ---
+              HasED  HasLongGap  NumVisits  JourneyDays
+HighRiskSDOH                                           
+False         0.164       0.186      3.267      119.910
+True          0.257       0.149      2.719       84.914
+
+--- ED rate by SDOH factor (surveyed only) ---
+  TransportBarrier       NO: 16.6%   YES: 30.1%   (n=881)
+  FoodInsecurity         NO: 16.6%   YES: 24.8%   (n=1,422)
+  FinancialStrain        NO: 16.6%   YES: 28.7%   (n=1,122)
+  HousingInstability     NO: 16.7%   YES: 36.8%   (n=470)
+  HighStress             NO: 16.7%   YES: 21.1%   (n=2,042)
+  UtilitiesHardship      NO: 16.6%   YES: 20.7%   (n=3,269)
+
+--- Fix 2: Traumatic vs Osteoporosis separation ---
+Traumatic fracture journeys  : 37,072
+Osteoporosis journeys        : 8,945
+
+Traumatic fracture — gap stats:
+count    17509.0
+mean        45.0
+std         78.2
+min          0.0
+25%         14.0
+50%         28.0
+75%         43.0
+max       1344.0
+Name: MaxGapDays, dtype: float64
+
+Osteoporosis — gap stats:
+count    5418.0
+mean      288.6
+std       244.3
+min         0.0
+25%       150.2
+50%       194.0
+75%       371.0
+max      1414.0
+Name: MaxGapDays, dtype: float64
+
+Traumatic — long gap rate by age group:
+           mean  count
+AgeGroup              
+0-17      0.028   5353
+18-34     0.068   5432
+35-49     0.078   4182
+50-64     0.094   4965
+65-79     0.099   8470
+80+       0.095   7270
+
+Osteoporosis — long gap rate by age group:
+           mean  count
+AgeGroup              
+18-34     0.500      8
+35-49     0.487     76
+50-64     0.502    404
+65-79     0.522   4030
+80+       0.522   3975
+
+--- Fix 3: Multi-visit journeys (NumVisits >= 2) ---
+Multi-visit journeys         : 22,927  (49.8% of total)
+Single-visit journeys removed: 23,090
+
+Gap stats (multi-visit only):
+count    22927.0
+mean       102.6
+std        171.7
+min          0.0
+25%         16.0
+50%         34.0
+75%         98.0
+max       1414.0
+Name: MaxGapDays, dtype: float64
+
+Long gap rate by fracture type (multi-visit only):
+                                                           mean  count
+GroupName                                                             
+Osteoporosis without current pathological fracture        0.858   4690
+Osteoporosis with current pathological fracture           0.734    728
+Fracture of femur                                         0.330   1296
+Periprosthetic fracture around internal prosthetic joint  0.235     68
+Fracture of lower leg, including ankle                    0.234   3567
+Fracture of cervical vertebra and other parts of neck     0.213    319
+Fracture of lumbar spine and pelvis                       0.206   1031
+Fracture of shoulder and upper arm                        0.202   2199
+Fracture of rib                                           0.162    765
+Fracture of foot and toe, except ankle                    0.132   1551
+Fracture of forearm                                       0.106   3642
+Fracture of skull and facial bones                        0.094    127
+Fracture at wrist and hand level                          0.066   2944
+
+Long gap rate by age group (multi-visit, traumatic only):
+           mean  count
+AgeGroup              
+0-17      0.053   2817
+18-34     0.143   2582
+35-49     0.172   1891
+50-64     0.203   2297
+65-79     0.203   4108
+80+       0.208   3318
+
+ED rate by transport barrier (multi-visit, surveyed, traumatic):
+  With transport barrier    : 14.2%  (n=275)
+  Without transport barrier : 8.2%  (n=13,247)
+
+--- Fix 4: Rebuilding clusters on traumatic multi-visit journeys ---
+
+Cluster profiles:
+           NumVisits  JourneyDays  MaxGapDays  AvgGapDays  HasED  HasHospital  HasLongGap  TransportBarrier  FoodInsecurity  FinancialStrain  SDOHRiskCount  ApproxAge
+ClusterID                                                                                                                                                             
+0               4.36        37.14       22.77       12.64   0.06         0.00        0.00              0.00            0.01             0.00           0.09      47.53
+1               4.50        70.16       48.48       24.77   0.12         0.05        0.15              0.47            0.82             0.81           3.47      55.15
+2               4.16        69.86       46.16       25.49   0.78         1.00        0.18              0.01            0.02             0.02           0.22      61.61
+3               6.55       222.74      154.80       66.26   0.03         0.00        1.00              0.01            0.01             0.01           0.12      57.43
+
+Cluster sizes with names:
+ClusterName
+Routine Healers      13736
+Lost to Follow-Up     2761
+ED Dependent           614
+Social Crisis          398
+
+Named cluster profiles:
+                   NumVisits  JourneyDays  MaxGapDays  HasED  HasLongGap  SDOHRiskCount  ApproxAge
+ClusterName                                                                                       
+ED Dependent            4.16        69.86       46.16   0.78        0.18           0.22      61.61
+Lost to Follow-Up       6.55       222.74      154.80   0.03        1.00           0.12      57.43
+Routine Healers         4.36        37.14       22.77   0.06        0.00           0.09      47.53
+Social Crisis           4.50        70.16       48.48   0.12        0.15           3.47      55.15
+
+Cluster age breakdown:
+ClusterName        AgeGroup
+ED Dependent       80+         0.329
+                   65-79       0.305
+                   35-49       0.128
+                   50-64       0.118
+                   18-34       0.090
+                   0-17        0.029
+Lost to Follow-Up  65-79       0.296
+                   80+         0.242
+                   50-64       0.166
+                   18-34       0.131
+                   35-49       0.111
+                   0-17        0.055
+Routine Healers    65-79       0.226
+                   0-17        0.199
+                   80+         0.182
+                   18-34       0.159
+                   50-64       0.126
+                   35-49       0.109
+Social Crisis      65-79       0.294
+                   50-64       0.254
+                   35-49       0.173
+                   18-34       0.153
+                   80+         0.121
+                   0-17        0.005
+
+Cluster race breakdown:
+ClusterName        RaceSimple     
+ED Dependent       White              0.832
+                   Other/Unknown      0.068
+                   Black              0.042
+                   Hispanic           0.039
+                   Native American    0.015
+                   Asian              0.003
+Lost to Follow-Up  White              0.833
+                   Black              0.051
+                   Other/Unknown      0.051
+                   Hispanic           0.050
+                   Native American    0.011
+                   Asian              0.004
+Routine Healers    White              0.803
+                   Other/Unknown      0.074
+                   Hispanic           0.057
+                   Black              0.051
+                   Native American    0.009
+                   Asian              0.005
+Social Crisis      White              0.854
+                   Black              0.063
+                   Hispanic           0.053
+                   Native American    0.028
+                   Other/Unknown      0.003
+
+--- Generating presentation figures ---
+✓ Saved outputs/fig1_two_pathways.png
+✓ Saved outputs/fig2_cluster_map.png
+✓ Saved outputs/fig3_osteo_vs_traumatic.png
+✓ Saved outputs/fig4_correlation_matrix.png
+
+
+=== VERIFIED KEY NUMBERS (use these in presentation) ===
+
+DATA SCOPE
+  Total fracture journeys          : 46,017
+  Multi-visit journeys (≥2 visits) : 22,927  (49.8%)
+  Traumatic fracture journeys      : 37,072
+  Osteoporosis journeys            : 8,945
+
+QUESTION 1 — Do patients experience long gaps?
+  Long gap rate (all journeys)     : 16.3%
+  Long gap rate (multi-visit only) : 32.6%
+  Long gap rate (traumatic, multi) : 16.7%
+  Traumatic median max gap         : 28 days
+  Osteoporosis median max gap      : 194 days
+  Overall ED visit rate            : 18.7%
+
+QUESTION 2 — Does home environment predict gaps/ED?
+  Transport barrier → ED rate      : 14.2%
+  No transport barrier → ED rate   : 8.2%
+  Transport barrier relative risk  : 1.74x
+  Housing instability → ED rate    : 14.1%
+  No housing instability → ED rate : 8.2%
+  Housing instability relative risk: 1.72x  (if >0)
+
+CLUSTER FINDINGS
+
+  [Routine Healers]  n=13,736
+    Avg visits    : 4.4
+    Journey days  : 37
+    Max gap days  : 23
+    ED rate       : 6.0%
+    Long gap rate : 0.0%
+    SDOH risk avg : 0.09
+
+  [Lost to Follow-Up]  n=2,761
+    Avg visits    : 6.5
+    Journey days  : 223
+    Max gap days  : 155
+    ED rate       : 2.7%
+    Long gap rate : 99.6%
+    SDOH risk avg : 0.12
+
+  [ED Dependent]  n=614
+    Avg visits    : 4.2
+    Journey days  : 70
+    Max gap days  : 46
+    ED rate       : 77.9%
+    Long gap rate : 18.1%
+    SDOH risk avg : 0.22
+
+  [Social Crisis]  n=398
+    Avg visits    : 4.5
+    Journey days  : 70
+    Max gap days  : 48
+    ED rate       : 11.6%
+    Long gap rate : 15.1%
+    SDOH risk avg : 3.47
+
+✓ Saved outputs/journey_clusters_final.csv
+
+=== DONE — check logs/04_cleanup_and_viz.txt and outputs/ ===
+
+Figures saved:
+  outputs/fig1_two_pathways.png
+  outputs/fig2_cluster_map.png
+  outputs/fig3_osteo_vs_traumatic.png
+  outputs/fig4_correlation_matrix.png

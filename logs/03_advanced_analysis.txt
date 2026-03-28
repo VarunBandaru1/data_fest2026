@@ -1,0 +1,352 @@
+✓ Imports OK
+
+Loading journey table from outputs/...
+  journey_pat : (46017, 32)
+  Columns     : ['PatientDurableKey', 'DiagnosisValue', 'FirstVisit', 'LastVisit', 'NumVisits', 'AvgGapDays', 'MaxGapDays', 'HasED', 'HasHospital', 'GroupName', 'GroupCode', 'JourneyDays', 'HasLongGap', 'HasVeryLongGap', 'DurableKey', 'PatientBirthYearBin', 'FirstRace', 'OmbEthnicity', 'CensusBlockGroupFipsCode', 'MyChartStatus', 'SmokingStatus', 'VitalStatus', 'ApproxAge', 'AgeGroup', 'RaceSimple', 'TransportBarrier', 'FoodInsecurity', 'FinancialStrain', 'HousingInstability', 'Stress', 'SDOHRiskCount', 'HighRiskSDOH']
+  patients    : (947685, 12)
+  soc_det     : (3977901, 5)
+
+--- Fixing demographic merge ---
+journey_pat PatientDurableKey dtype : int64
+patients DurableKey dtype           : float64
+Sample journey keys  : [1000015, 10000494, 10000494, 100018, 100018]
+Sample patient keys  : [5.0, 8.0, 9.0, 11.0, 12.0]
+
+After fix — sample journey keys : ['1000015', '10000494', '10000494', '100018', '100018']
+After fix — sample patient keys : ['5', '8', '9', '11', '12']
+Key overlap                     : 23,094 / 24,166
+
+--- Race distribution after fix ---
+RaceSimple
+White              37181
+Other/Unknown       3441
+Hispanic            2347
+Black               2303
+Native American      438
+Asian                307
+
+--- Age group distribution after fix ---
+AgeGroup
+0-17      5353
+18-34     5440
+35-49     4258
+50-64     5369
+65-79    12500
+80+      11245
+
+--- MyChart status distribution ---
+MyChartStatus
+Activated                      33921
+Pending Activation              6561
+Inactivated                     2457
+Patient Declined                 561
+Non Standard MyChart Status      456
+*Unspecified                     214
+
+--- Rebuilding SDOH flags with correct answer values ---
+  Transport barrier   : 3,058 patients
+  Food insecurity     : 5,892 patients
+  Financial strain    : 4,444 patients
+  Housing instability : 2,400 patients
+  High stress         : 8,943 patients
+  Utilities hardship  : 12,564 patients
+
+Patients with 0 SDOH risks  : 40,464
+Patients with 1 SDOH risk   : 3,656
+Patients with 2+ SDOH risks : 1,897
+
+
+=== BASIC ANALYSIS ===
+
+--- Long gap (60+d) rate by fracture type ---
+                                                           mean  count
+GroupName                                                             
+Osteoporosis without current pathological fracture        0.561   7174
+Osteoporosis with current pathological fracture           0.302   1771
+Fracture of lower leg, including ankle                    0.133   6274
+Fracture of femur                                         0.132   3243
+Periprosthetic fracture around internal prosthetic joint  0.131    122
+Fracture of shoulder and upper arm                        0.108   4119
+Fracture of cervical vertebra and other parts of neck     0.102    664
+Fracture of lumbar spine and pelvis                       0.083   2543
+Fracture of forearm                                       0.060   6495
+Fracture of foot and toe, except ankle                    0.055   3742
+Fracture of rib                                           0.046   2692
+Fracture at wrist and hand level                          0.032   6041
+Fracture of skull and facial bones                        0.011   1137
+
+--- Long gap rate by age group ---
+           mean  count
+AgeGroup              
+0-17      0.028   5353
+18-34     0.069   5440
+35-49     0.085   4258
+50-64     0.125   5369
+65-79     0.235  12500
+80+       0.246  11245
+
+--- Long gap rate by race ---
+                  mean  count
+RaceSimple                   
+Asian            0.221    307
+White            0.175  37181
+Native American  0.126    438
+Hispanic         0.106   2347
+Other/Unknown    0.103   3441
+Black            0.101   2303
+
+--- Long gap rate by MyChart status ---
+                              mean  count
+MyChartStatus                            
+Activated                    0.181  33921
+Patient Declined             0.157    561
+Pending Activation           0.119   6561
+Inactivated                  0.101   2457
+Non Standard MyChart Status  0.020    456
+*Unspecified                 0.005    214
+
+--- ED visit rate by SDOH risk ---
+              HasED  HasLongGap  NumVisits  JourneyDays
+HighRiskSDOH                                           
+False         0.184       0.163      3.072      100.578
+True          0.257       0.149      2.719       84.914
+
+--- Long gap rate by each SDOH factor ---
+  TransportBarrier       NO: 16.3%   YES: 13.4%   (n=881)
+  FoodInsecurity         NO: 16.3%   YES: 15.4%   (n=1,422)
+  FinancialStrain        NO: 16.4%   YES: 11.5%   (n=1,122)
+  HousingInstability     NO: 16.3%   YES: 7.7%   (n=470)
+  HighStress             NO: 16.2%   YES: 18.0%   (n=2,042)
+  UtilitiesHardship      NO: 16.0%   YES: 19.5%   (n=3,269)
+
+--- ED visit rate by each SDOH factor ---
+  TransportBarrier       NO: 18.4%   YES: 30.1%   (n=881)
+  FoodInsecurity         NO: 18.5%   YES: 24.8%   (n=1,422)
+  FinancialStrain        NO: 18.4%   YES: 28.7%   (n=1,122)
+  HousingInstability     NO: 18.5%   YES: 36.8%   (n=470)
+  HighStress             NO: 18.6%   YES: 21.1%   (n=2,042)
+  UtilitiesHardship      NO: 18.5%   YES: 20.7%   (n=3,269)
+
+--- Median max gap by SDOH risk count ---
+               median   mean  count
+SDOHRiskCount                      
+0                33.0  100.3  20225
+1                42.0  128.6   1860
+2                41.0  103.3    458
+3                35.0  118.7    185
+4                30.5   89.8     98
+5                28.0   58.0     69
+6                19.0   37.0     32
+
+--- Transport barrier rate by race ---
+                  mean  count
+RaceSimple                   
+Native American  0.041    438
+Black            0.036   2303
+White            0.020  37181
+Hispanic         0.018   2347
+Asian            0.007    307
+Other/Unknown    0.002   3441
+
+--- Transport barrier rate by age group ---
+           mean  count
+AgeGroup              
+0-17      0.000   5353
+18-34     0.013   5440
+35-49     0.029   4258
+50-64     0.034   5369
+65-79     0.023  12500
+80+       0.019  11245
+
+
+=== ADVANCED: CORRELATION MATRIX ===
+
+Top correlations with MaxGapDays:
+MaxGapDays          1.000
+AvgGapDays          0.873
+HasVeryLongGap      0.814
+JourneyDays         0.801
+HasLongGap          0.724
+NumVisits           0.294
+ApproxAge           0.190
+MyChartActive       0.083
+UtilitiesHard       0.024
+HighStress          0.001
+SDOHRiskCount      -0.002
+FoodInsecurity     -0.009
+TransportBarrier   -0.010
+FinancialStrain    -0.017
+HousingInstab      -0.023
+HasHospital        -0.102
+HasED              -0.162
+
+Top correlations with HasED:
+HasED               1.000
+HasHospital         0.490
+HousingInstab       0.047
+SDOHRiskCount       0.042
+TransportBarrier    0.041
+FinancialStrain     0.041
+FoodInsecurity      0.028
+UtilitiesHard       0.014
+HighStress          0.013
+ApproxAge          -0.043
+MyChartActive      -0.116
+AvgGapDays         -0.131
+HasVeryLongGap     -0.149
+MaxGapDays         -0.162
+JourneyDays        -0.169
+HasLongGap         -0.185
+NumVisits          -0.190
+
+Top correlations with HasLongGap:
+HasLongGap          1.000
+HasVeryLongGap      0.756
+JourneyDays         0.751
+MaxGapDays          0.724
+AvgGapDays          0.590
+NumVisits           0.419
+ApproxAge           0.209
+MyChartActive       0.082
+UtilitiesHard       0.024
+HighStress          0.010
+SDOHRiskCount       0.001
+FoodInsecurity     -0.004
+TransportBarrier   -0.011
+FinancialStrain    -0.020
+HousingInstab      -0.024
+HasHospital        -0.113
+HasED              -0.185
+
+✓ Saved outputs/correlation_matrix.png
+
+
+=== ADVANCED: PATIENT JOURNEY CLUSTERING ===
+Clustering on 46,017 journeys with 12 features
+
+Inertia by k (elbow method):
+  k=2: 426,628
+  k=3: 330,482
+  k=4: 275,828
+  k=5: 244,044
+  k=6: 215,439
+  k=7: 191,157
+  k=8: 165,297
+
+Cluster sizes (k=4):
+Cluster
+0    30690
+1     5149
+2     1065
+3     9113
+
+Cluster profiles (mean values):
+         NumVisits  JourneyDays  MaxGapDays  HasED  HasLongGap  TransportBarrier  FoodInsecurity  FinancialStrain  SDOHRiskCount  ApproxAge
+Cluster                                                                                                                                    
+0             2.74        25.79       31.96   0.00        0.07              0.01            0.01             0.01           0.11      53.99
+1             7.87       712.93      342.84   0.01        1.00              0.01            0.02             0.01           0.16      74.05
+2             2.61        65.32       80.57   0.27        0.11              0.56            0.87             0.77           3.62      56.95
+3             1.47         7.32       29.31   0.91        0.02              0.01            0.01             0.01           0.13      56.43
+
+--- Cluster race breakdown ---
+Cluster  RaceSimple     
+0        White              0.806
+         Other/Unknown      0.080
+         Hispanic           0.052
+         Black              0.046
+         Native American    0.009
+         Asian              0.006
+1        White              0.896
+         Other/Unknown      0.035
+         Hispanic           0.029
+         Black              0.023
+         Asian              0.010
+         Native American    0.007
+2        White              0.836
+         Black              0.078
+         Hispanic           0.054
+         Native American    0.017
+         Other/Unknown      0.011
+         Asian              0.005
+3        White              0.762
+         Other/Unknown      0.086
+         Black              0.075
+         Hispanic           0.060
+         Native American    0.011
+         Asian              0.006
+
+--- Cluster fracture type breakdown ---
+Cluster  GroupName                                               
+0        Fracture of forearm                                         0.167
+         Fracture at wrist and hand level                            0.162
+         Fracture of lower leg, including ankle                      0.145
+         Osteoporosis without current pathological fracture          0.110
+         Fracture of foot and toe, except ankle                      0.100
+         Fracture of shoulder and upper arm                          0.096
+         Fracture of lumbar spine and pelvis                         0.055
+         Fracture of rib                                             0.052
+         Fracture of femur                                           0.051
+         Osteoporosis with current pathological fracture             0.033
+         Fracture of skull and facial bones                          0.015
+         Fracture of cervical vertebra and other parts of neck       0.012
+         Periprosthetic fracture around internal prosthetic joint    0.003
+1        Osteoporosis without current pathological fracture          0.720
+         Osteoporosis with current pathological fracture             0.084
+         Fracture of lower leg, including ankle                      0.059
+         Fracture of femur                                           0.034
+         Fracture of shoulder and upper arm                          0.025
+         Fracture of forearm                                         0.024
+         Fracture of lumbar spine and pelvis                         0.015
+
+--- Cluster age group breakdown ---
+Cluster  AgeGroup
+0        65-79       0.269
+         80+         0.226
+         0-17        0.150
+         18-34       0.137
+         50-64       0.121
+         35-49       0.096
+1        65-79       0.440
+         80+         0.436
+         50-64       0.071
+         35-49       0.025
+         18-34       0.017
+         0-17        0.010
+2        65-79       0.336
+         50-64       0.259
+         35-49       0.170
+         18-34       0.118
+         80+         0.113
+         0-17        0.003
+3        80+         0.263
+         65-79       0.232
+         18-34       0.137
+         50-64       0.136
+         35-49       0.130
+         0-17        0.102
+
+PCA explained variance: [0.295 0.231]
+Total variance explained: 52.6%
+
+✓ Saved outputs/cluster_analysis.png
+✓ Saved outputs/elbow_plot.png
+
+
+=== FINAL KEY NUMBERS FOR PRESENTATION ===
+
+Total fracture journeys          : 46,017
+Overall long gap rate (60+d)     : 16.3%
+Overall ED visit rate            : 18.7%
+
+High SDOH risk → ED rate         : 25.7%
+Low SDOH risk  → ED rate         : 18.4%
+Relative ED risk (high vs low)   : 1.40x
+
+Transport barrier → ED rate      : 30.1%
+No transport barrier → ED rate   : 18.4%
+
+Osteoporosis median follow-up gap: 194 days
+
+✓ Saved outputs/journey_pat_final.csv
+
+=== DONE — check logs/03_advanced_analysis.txt and outputs/ ===

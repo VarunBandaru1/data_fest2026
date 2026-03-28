@@ -1,0 +1,277 @@
+✓ Imports OK
+
+Loading files...
+✓ All files loaded
+  encounters : (7675801, 31)
+  soc_det    : (3977901, 5)
+
+Fracture diagnosis records  : 421,075
+Unique GroupNames           : 13
+Unique DiagnosisValues      : 17644
+
+Top 15 fracture GroupNames:
+GroupName
+Fracture of lower leg, including ankle                      84079
+Fracture of forearm                                         68275
+Fracture at wrist and hand level                            58559
+Fracture of femur                                           57718
+Fracture of shoulder and upper arm                          45886
+Fracture of foot and toe, except ankle                      39515
+Fracture of lumbar spine and pelvis                         20330
+Fracture of skull and facial bones                          17259
+Fracture of rib                                             16511
+Fracture of cervical vertebra and other parts of neck        7509
+Osteoporosis with current pathological fracture              4898
+Periprosthetic fracture around internal prosthetic joint      275
+Osteoporosis without current pathological fracture            261
+
+Fracture encounters         : 140,682
+Unique patients             : 24,166
+
+--- Journey Summary ---
+Total fracture journeys     : 46,017
+Unique patients             : 24,166
+
+Visits per journey:
+count    46017.0
+mean         3.1
+std          3.9
+min          1.0
+25%          1.0
+50%          1.0
+75%          4.0
+max         83.0
+Name: NumVisits, dtype: float64
+
+Journey length (days):
+count    46017.0
+mean        99.9
+std        256.2
+min          0.0
+25%          0.0
+50%          0.0
+75%         51.0
+max       1456.0
+Name: JourneyDays, dtype: float64
+
+Max gap days:
+count    22927.0
+mean       102.6
+std        171.7
+min          0.0
+25%         16.0
+50%         34.0
+75%         98.0
+max       1414.0
+Name: MaxGapDays, dtype: float64
+
+Journeys with 60+ day gap  : 7,481  (16.3%)
+Journeys with 180+ day gap : 4,592  (10.0%)
+
+Journeys with ED visit     : 8,591  (18.7%)
+
+Gap distribution by fracture type (GroupName):
+                                                           mean  median  count
+GroupName                                                                     
+Osteoporosis without current pathological fracture        301.3   202.0   4690
+Osteoporosis with current pathological fracture           207.3   182.0    728
+Fracture of femur                                          70.4    42.0   1296
+Fracture of cervical vertebra and other parts of neck      51.4    40.0    319
+Periprosthetic fracture around internal prosthetic joint   63.6    35.0     68
+Fracture of lower leg, including ankle                     53.8    30.0   3567
+Fracture of lumbar spine and pelvis                        54.5    29.0   1031
+Fracture of foot and toe, except ankle                     39.3    28.0   1551
+Fracture of forearm                                        37.7    28.0   3642
+Fracture of shoulder and upper arm                         46.7    28.0   2199
+Fracture at wrist and hand level                           30.0    22.0   2944
+Fracture of rib                                            46.6    20.0    765
+Fracture of skull and facial bones                         24.1     9.0    127
+
+--- Long gap rate by age group ---
+Empty DataFrame
+Columns: [mean, count]
+Index: []
+
+--- Long gap rate by race ---
+                mean  count
+RaceSimple                 
+Other/Unknown  0.163  46017
+
+--- Long gap rate by MyChart status ---
+Empty DataFrame
+Columns: [mean, count]
+Index: []
+
+Building SDOH flags...
+
+--- Unique AnswerText values per SDOH domain ---
+
+  [Alcohol Use]
+AnswerText
+Never                     92863
+Patient does not drink    34931
+1 or 2                    26441
+Monthly or less           16988
+2-4 times a month          8510
+Less than monthly          5339
+2-3 times a week           5216
+Patient declined           5078
+
+  [Depression]
+AnswerText
+Never    14941
+0         6004
+2         1983
+1         1825
+3         1551
+4         1378
+5         1094
+6          975
+
+  [Financial Resource Strain]
+AnswerText
+No                          137638
+Yes                           6823
+Patient declined              3256
+Patient unable to answer      2302
+Already shut off               287
+*Unknown                        17
+
+  [Food insecurity]
+AnswerText
+Never true                  144301
+Sometimes true                9720
+Patient declined              4333
+Often true                    3591
+Patient unable to answer      2209
+
+  [Housing Stability]
+AnswerText
+No                          50527
+0                           38012
+1                            6942
+Yes                          1661
+2                            1522
+Patient unable to answer     1054
+3                             463
+Patient declined              362
+
+  [Transportation Needs]
+AnswerText
+No                          152019
+Yes                           6806
+Patient declined              3336
+Patient unable to answer      2112
+
+  [Utilities]
+AnswerText
+Not hard at all             44273
+Not very hard               11086
+Somewhat hard                5634
+Patient declined             2019
+Hard                         1592
+Very hard                    1513
+Patient unable to answer      650
+
+  [intimate partner violance]
+AnswerText
+No                          172164
+Patient unable to answer     13182
+Patient declined              3507
+Yes                           2752
+
+  [physical activity]
+AnswerText
+0 days    22860
+0 min     21618
+30 min    12356
+3 days     9662
+5 days     8319
+60 min     7401
+20 min     6868
+7 days     6363
+
+  [social connections]
+AnswerText
+Never                           70858
+More than three times a week    55112
+More than 4 times per year      37962
+No                              36892
+Married                         32383
+Once a week                     26452
+Yes                             21843
+Patient declined                17246
+
+  [stress]
+AnswerText
+Not at all                  24347
+Only a little               18200
+To some extent              14073
+Rather much                  5530
+Very much                    4690
+Patient unable to answer     1837
+Patient declined             1328
+
+  Transport barrier patients : 3,058
+  Food insecurity patients   : 5,892
+  Financial strain patients  : 4,398
+  Housing instability pts    : 2,413
+  Stress patients            : 0
+
+Patients with 0 SDOH risks  : 43,785
+Patients with 1 SDOH risk   : 1,279
+Patients with 2+ SDOH risks : 953
+
+
+=== CORE RESULTS ===
+
+--- Long Gap Rate (60+ days) by SDOH Factor ---
+  TransportBarrier       NO: 16.3%   YES: 13.4%   (n with flag=881)
+  FoodInsecurity         NO: 16.3%   YES: 15.4%   (n with flag=1,422)
+  FinancialStrain        NO: 16.4%   YES: 11.6%   (n with flag=1,112)
+  HousingInstability     NO: 16.3%   YES: 7.8%   (n with flag=472)
+  Stress                 NO: 16.3%   YES: 0.0%   (n with flag=0)
+
+--- High Risk SDOH (2+ factors) vs Journey Outcomes ---
+              HasLongGap  HasVeryLongGap  HasED  NumVisits  JourneyDays
+HighRiskSDOH                                                           
+False              0.164           0.100  0.184      3.066      100.499
+True               0.119           0.075  0.301      2.621       73.128
+
+--- Median Max Gap Days by SDOH Risk Count ---
+                mean  median  count
+SDOHRiskCount                      
+0              102.8    34.0  21902
+1              101.9    39.0    621
+2              123.0    40.0    217
+3               73.2    28.0    119
+4               34.7    20.0     68
+
+--- Transport Barrier Rate by Race ---
+                mean  count
+RaceSimple                 
+Other/Unknown  0.019  46017
+
+--- Transport Barrier Rate by Age Group ---
+Empty DataFrame
+Columns: [mean, count]
+Index: []
+
+✓ Saved outputs/journey_analysis.png
+
+
+=== KEY NUMBERS FOR PRESENTATION ===
+
+Total fracture journeys analyzed : 46,017
+Journeys with 60+ day gap        : 7,481  (16.3%)
+
+Transport barrier → long gap     : 13.4%
+No transport barrier → long gap  : 16.3%
+Relative increase                : 0.82x
+
+High SDOH risk → ED visit rate   : 30.1%
+Low SDOH risk  → ED visit rate   : 18.4%
+
+✓ Saved outputs/journey_pat_fractures.csv
+
+=== DONE — check logs/02_journey_analysis.txt and outputs/ ===
