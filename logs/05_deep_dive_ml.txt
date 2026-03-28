@@ -1,0 +1,261 @@
+✓ Imports OK
+======================================================================
+
+Loading data...
+  journey_pat : (46017, 36)
+  soc_det     : (3977901, 5)
+  TransportBarrier      : 881 patients flagged
+  FoodInsecurity        : 1,422 patients flagged
+  FinancialStrain       : 1,112 patients flagged
+  HousingInstability    : 1,770 patients flagged
+  HighStress            : 2,042 patients flagged
+  UtilitiesHardship     : 1,917 patients flagged
+  IPV                   : 232 patients flagged
+  ClusterName attached from journey_clusters_final.csv  (18,712 rows matched)
+
+Subset sizes:
+  All journeys          : 46,241
+  Multi-visit           : 23,145
+  Traumatic multi-visit : 17,727
+  Surv. traum. multi    : 13,704
+  Osteoporosis          : 8,945
+  Clustered rows        : 18,712
+
+======================================================================
+SECTION 1 — LOST TO FOLLOW-UP CLUSTER DEEP DIVE
+======================================================================
+
+Cluster sizes:
+  Routine Healers       : n=14,603  mean_gap=24d  ED=5.7%  SDOH_avg=0.09
+  Lost to Follow-Up     : n=3,043  mean_gap=150d  ED=2.6%  SDOH_avg=0.13
+  ED Dependent          : n=625  mean_gap=47d  ED=76.6%  SDOH_avg=0.21
+  Social Crisis         : n=441  mean_gap=50d  ED=10.7%  SDOH_avg=3.83
+
+--- Lost to Follow-Up deep dive ---
+  n                   : 3,043
+  Mean age            : 59.2
+  Mean max gap        : 150 days
+  Median max gap      : 95 days
+  ED visit rate       : 2.6%
+  Avg SDOH risk count : 0.13
+
+Top fracture types in Lost to Follow-Up:
+GroupName
+Fracture of lower leg, including ankle    0.279
+Fracture of shoulder and upper arm        0.149
+Fracture of femur                         0.145
+Fracture of forearm                       0.141
+Fracture at wrist and hand level          0.072
+Fracture of foot and toe, except ankle    0.072
+
+Age group breakdown — LTFU vs Routine Healers:
+          Lost to Follow-Up  Routine Healers
+AgeGroup                                    
+0-17                  0.052            0.195
+18-34                 0.133            0.158
+35-49                 0.113            0.110
+50-64                 0.165            0.127
+65-79                 0.294            0.227
+80+                   0.244            0.183
+
+Gap distribution — LTFU vs Routine:
+  LTFU    — mean=150d, median=95d, p75=163d
+  Routine — mean=24d, median=23d, p75=35d
+
+Chi-squared (age distribution LTFU vs Routine): χ²=422.9, p=0.0000, df=5
+Mann-Whitney U (LTFU gap > Routine gap): U=38992058, p=0.00e+00
+
+✓ Saved outputs/fig5_ltfu_deep_dive.png
+
+======================================================================
+SECTION 2 — OSTEOPOROSIS PATHWAY DEEP DIVE
+======================================================================
+
+Osteoporosis journeys total         : 8,945
+  Zero follow-up (single visit)     : 3,527  (39.4%)
+  Multi-visit                       : 5,418  (60.6%)
+
+Osteoporosis multi-visit — gap stats:
+count    5418.0
+mean      288.6
+std       244.3
+min         0.0
+25%       150.2
+50%       194.0
+75%       371.0
+max      1414.0
+
+Osteoporosis multi-visit — long gap rate by age:
+           mean  count
+AgeGroup              
+18-34     1.000      4
+35-49     0.860     43
+50-64     0.766    265
+65-79     0.842   2495
+80+       0.861   2408
+
+Traumatic multi-visit — gap stats (for comparison):
+count    17727.0
+mean        45.5
+std         78.9
+min          0.0
+25%         14.0
+50%         28.0
+75%         43.0
+max       1344.0
+
+Median gap difference (osteo − traumatic): 166 days
+Mann-Whitney U (osteo gap > traumatic): U=84527588, p=0.00e+00
+
+Age breakdown — single-visit osteoporosis patients (zero follow-up):
+AgeGroup
+80+      1567
+65-79    1535
+50-64     139
+35-49      33
+18-34       4
+
+✓ Saved outputs/fig6_osteo_deep_dive.png
+
+======================================================================
+SECTION 3 — THE ED SUBSTITUTION PATTERN
+======================================================================
+Core paradox: SDOH barriers RAISE ED rates but LOWER (or equal) gap rates.
+Interpretation: barriers don't prevent care — they redirect it to the ED.
+
+SDOH Factor              ED NO   ED YES    Δ ED   GAP NO   GAP YES   Δ GAP   n(YES)        χ²-p
+------------------------------------------------------------------------------------------
+  TransportBarrier          8.1%    14.2%   +6.1pp    17.6%     16.0%   -1.6pp     275  χ²-p=0.0004
+  FoodInsecurity            8.0%    12.6%   +4.6pp    17.5%     18.6%   +1.1pp     499  χ²-p=0.0003
+  FinancialStrain           8.0%    12.6%   +4.6pp    17.6%     16.5%   -1.1pp     412  χ²-p=0.0012
+  HousingInstability        8.0%    11.0%   +2.9pp    17.5%     19.6%   +2.1pp     639  χ²-p=0.0109
+  HighStress                8.1%     9.5%   +1.4pp    17.4%     19.9%   +2.5pp     728  χ²-p=0.2136
+  UtilitiesHardship         8.1%    10.5%   +2.5pp    17.5%     19.2%   +1.7pp     703  χ²-p=0.0238
+  IPV                       8.1%    17.5%   +9.3pp    17.6%     14.3%   -3.3pp      63  χ²-p=0.0138
+
+--- Journey length: Any SDOH vs None (surveyed, traumatic, multi-visit) ---
+         JourneyDays  NumVisits  HasED  HasLongGap
+AnySDoH                                           
+False         71.357       4.83  0.079       0.172
+True          76.467       4.81  0.102       0.199
+
+✓ Saved outputs/fig7_ed_substitution.png
+
+======================================================================
+SECTION 4 — MACHINE LEARNING MODELS
+======================================================================
+Predicting (1) dangerous care gaps and (2) ED dependency
+Models: Logistic Regression (interpretable odds ratios) + Random Forest
+Dataset: multi-visit, traumatic, surveyed journeys
+
+Modeling dataset: n=13,704
+  HasLongGap prevalence : 17.6%
+  HasED prevalence      : 8.2%
+  Features              : 19
+
+  ── HasLongGap — 60+ day care gap ──
+    Logistic Regression  : AUC=0.635  (5-fold CV: 0.653 ± 0.011)
+    Random Forest        : AUC=0.657  (5-fold CV: 0.662 ± 0.012)
+
+    Top predictors (Logistic Regression — Odds Ratios):
+                  display  odds_ratio  coefficient
+          Fracture: Wrist       0.614       -0.487
+        Fracture: Forearm       0.702       -0.353
+     Age (older → higher)       1.231        0.208
+           Fracture: Foot       0.824       -0.194
+          Fracture: Femur       1.140        0.131
+              Race: Black       1.095        0.091
+           MyChart Active       1.074        0.071
+Intimate Partner Violence       0.948       -0.053
+              Race: Asian       0.952       -0.049
+        Transport Barrier       0.955       -0.046
+
+    Top predictors (Random Forest — Importance):
+             display  importance
+Age (older → higher)      0.2754
+     Fracture: Wrist      0.2492
+   Fracture: Forearm      0.1186
+     Fracture: Femur      0.1173
+      Fracture: Foot      0.0347
+      MyChart Active      0.0255
+         Race: Black      0.0251
+ Housing Instability      0.0185
+         High Stress      0.0160
+  Fracture: Shoulder      0.0157
+
+  ── HasED — Emergency Dept visit ──
+    Logistic Regression  : AUC=0.605  (5-fold CV: 0.595 ± 0.017)
+    Random Forest        : AUC=0.571  (5-fold CV: 0.566 ± 0.019)
+
+    Top predictors (Logistic Regression — Odds Ratios):
+                  display  odds_ratio  coefficient
+          Fracture: Wrist       0.653       -0.427
+           Fracture: Foot       0.816       -0.203
+        Fracture: Forearm       0.866       -0.144
+              Race: Black       1.091        0.087
+         Fracture: Lumbar       0.940       -0.062
+          Fracture: Femur       0.943       -0.059
+          Food Insecurity       1.060        0.058
+Intimate Partner Violence       1.038        0.038
+       Fracture: Shoulder       0.964       -0.036
+     Age (older → higher)       0.965       -0.035
+
+    Top predictors (Random Forest — Importance):
+             display  importance
+     Fracture: Wrist      0.2707
+Age (older → higher)      0.1662
+      Fracture: Foot      0.0667
+      MyChart Active      0.0480
+         Race: Black      0.0443
+    Financial Strain      0.0413
+  Utilities Hardship      0.0402
+      Race: Hispanic      0.0396
+ Housing Instability      0.0371
+     Food Insecurity      0.0370
+
+✓ Saved outputs/fig8_ml_results.png
+✓ Saved outputs/fig9_sdoh_odds_ratios.png
+
+======================================================================
+FINAL SUMMARY — KEY NUMBERS FOR PRESENTATION
+======================================================================
+
+SECTION 1 — LOST TO FOLLOW-UP
+  Cluster n                     : 3,043
+  Median max gap                 : nan days
+  Long gap rate                  : 90.6%
+  ED rate                        : 2.6%
+  Avg SDOH risks                 : 0.13
+  Top fracture type              : Fracture of lower leg, including ankle
+  Chi²-p (age dist. vs Routine)  : 0.0000
+  Mann-Whitney p (gap > Routine) : 0.00e+00
+
+SECTION 2 — OSTEOPOROSIS
+  Total journeys                 : 8,945
+  Zero-follow-up (single visit)  : 3,527  (39.4%)
+  Median gap (multi-visit)       : 194 days
+  vs Traumatic median gap        : 28 days
+  Mann-Whitney p (osteo > traum) : 0.00e+00
+  Long gap rate (multi-visit)    : 84.1%
+
+SECTION 3 — ED SUBSTITUTION
+  Transport barrier → ED rate    : 14.2%  vs  8.1% (no barrier)
+  Housing instability → ED rate  : 11.0%  vs  8.0% (no instability)
+  Financial strain → ED rate     : 12.6%  vs  8.0% (no strain)
+
+SECTION 4 — ML MODELS  (n=13,704 journeys)
+  Long Gap  —  LR AUC  : 0.635   CV: 0.653 ± 0.011
+  Long Gap  —  RF AUC  : 0.657   CV: 0.662 ± 0.012
+  ED Visit  —  LR AUC  : 0.605   CV: 0.595 ± 0.017
+  ED Visit  —  RF AUC  : 0.571   CV: 0.566 ± 0.019
+  Top SDOH predictor (gap)       : Intimate Partner Violence   OR=0.95
+  Top SDOH predictor (ED)        : Food Insecurity   OR=1.06
+
+OUTPUT FIGURES
+  fig5_ltfu_deep_dive.png
+  fig6_osteo_deep_dive.png
+  fig7_ed_substitution.png
+  fig8_ml_results.png         (full ML dashboard)
+  fig9_sdoh_odds_ratios.png   (clean presenter slide)
+
+=== DONE — check logs/05_deep_dive_ml.txt and outputs/ ===
