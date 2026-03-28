@@ -1,0 +1,256 @@
+✓ Imports OK
+======================================================================
+
+Loading data...
+  journey_pat : (46017, 44)
+  multi_ts    : 13,522  (multi-visit traumatic surveyed)
+  % aged 65+  : 48.4%
+
+======================================================================
+SECTION 1 — SDOH BARRIER PREVALENCE BY AGE GROUP
+======================================================================
+
+Barrier prevalence (%) by age group:
+                     TransportBarrier  FoodInsecurity  FinancialStrain  HousingInstability  HighStress  UtilitiesHardship  IPV
+AgeSimple                                                                                                                     
+Young (≤49)                       1.4             3.2              2.6                 4.2         3.6                3.7  0.7
+Middle-Aged (50-64)               2.9             7.1              5.0                 4.2         7.2                8.9  0.5
+Older (65-79)                     2.3             4.4              3.6                 4.3         6.2                6.7  0.5
+Eldest (80+)                      2.2             1.4              1.7                 6.0         6.2                3.3  0.1
+
+n per age group:
+AgeSimple
+Young (≤49)            5111
+Middle-Aged (50-64)    1868
+Older (65-79)          3596
+Eldest (80+)           2947
+
+✓ Saved outputs/fig_A_sdoh_prevalence_by_age.png
+
+======================================================================
+SECTION 2 — SDOH BARRIER EFFECT ON LONG GAPS, BY AGE GROUP
+======================================================================
+Key question: does a transport barrier hurt a 75-year-old MORE than a 30-year-old?
+
+Long gap rate: barrier effect (gap_yes − gap_no) by age group and SDOH factor:
+AgeGroup                   Eldest (80+)  Middle-Aged (50-64)  Older (65-79)  Young (≤49)
+SDOH_label                                                                              
+Financial Strain                  -10.9                 -8.7           -2.8          8.8
+Food Insecurity                    -4.1                 -1.0           -4.5          9.1
+High Stress                         0.2                  0.3           -1.5          7.7
+Housing Instability                -1.6                 -2.4           -1.4          7.5
+Intimate Partner Violence          29.3                 -7.9            2.0         -3.4
+Transport Barrier                  -1.1                 -6.2           -4.7          3.2
+Utilities Hardship                 -1.0                  1.5           -2.6          6.4
+
+ED rate: barrier effect (ed_yes − ed_no) by age group and SDOH factor:
+AgeGroup                   Eldest (80+)  Middle-Aged (50-64)  Older (65-79)  Young (≤49)
+SDOH_label                                                                              
+Financial Strain                    4.1                  0.7            6.9          4.8
+Food Insecurity                     1.5                  1.7            5.0          7.1
+High Stress                         0.8                 -2.5            0.4          5.3
+Housing Instability                 4.1                  6.7           -0.9          3.7
+Intimate Partner Violence          42.0                 -9.0           13.7          9.8
+Transport Barrier                   5.8                  2.2            6.0          8.8
+Utilities Hardship                 -1.8                  3.3            2.3          3.7
+
+Absolute long gap rate (with barrier) by age group:
+AgeGroup                   Eldest (80+)  Middle-Aged (50-64)  Older (65-79)  Young (≤49)
+SDOH_label                                                                              
+Financial Strain                   10.0                 10.8           17.6         20.7
+Food Insecurity                    16.7                 18.0           15.9         21.0
+High Stress                        20.9                 19.3           18.8         19.6
+Housing Instability                19.2                 16.7           18.8         19.4
+Intimate Partner Violence          50.0                 11.1           22.2          8.8
+Transport Barrier                  19.7                 13.0           15.7         15.3
+Utilities Hardship                 19.8                 20.4           17.8         18.3
+
+Statistical significance (p-values, gap) — * p<0.05, ** p<0.01, *** p<0.001:
+  Young (≤49)             Transport Barrier         Δgap=+3.2pp  n(YES)=72  ns
+  Young (≤49)             Food Insecurity           Δgap=+9.1pp  n(YES)=162  ***
+  Young (≤49)             Financial Strain          Δgap=+8.8pp  n(YES)=135  **
+  Young (≤49)             Housing Instability       Δgap=+7.5pp  n(YES)=217  **
+  Young (≤49)             High Stress               Δgap=+7.7pp  n(YES)=184  **
+  Young (≤49)             Utilities Hardship        Δgap=+6.4pp  n(YES)=191  *
+  Young (≤49)             Intimate Partner Violence  Δgap=-3.4pp  n(YES)=34  ns
+  Middle-Aged (50-64)     Transport Barrier         Δgap=-6.2pp  n(YES)=54  ns
+  Middle-Aged (50-64)     Food Insecurity           Δgap=-1.0pp  n(YES)=133  ns
+  Middle-Aged (50-64)     Financial Strain          Δgap=-8.7pp  n(YES)=93  ns
+  Middle-Aged (50-64)     Housing Instability       Δgap=-2.4pp  n(YES)=78  ns
+  Middle-Aged (50-64)     High Stress               Δgap=+0.3pp  n(YES)=135  ns
+  Middle-Aged (50-64)     Utilities Hardship        Δgap=+1.5pp  n(YES)=167  ns
+  Older (65-79)           Transport Barrier         Δgap=-4.7pp  n(YES)=83  ns
+  Older (65-79)           Food Insecurity           Δgap=-4.5pp  n(YES)=157  ns
+  Older (65-79)           Financial Strain          Δgap=-2.8pp  n(YES)=131  ns
+  Older (65-79)           Housing Instability       Δgap=-1.4pp  n(YES)=154  ns
+  Older (65-79)           High Stress               Δgap=-1.5pp  n(YES)=223  ns
+  Older (65-79)           Utilities Hardship        Δgap=-2.6pp  n(YES)=242  ns
+  Eldest (80+)            Transport Barrier         Δgap=-1.1pp  n(YES)=66  ns
+  Eldest (80+)            Food Insecurity           Δgap=-4.1pp  n(YES)=42  ns
+  Eldest (80+)            Financial Strain          Δgap=-10.9pp  n(YES)=50  ns
+  Eldest (80+)            Housing Instability       Δgap=-1.6pp  n(YES)=177  ns
+  Eldest (80+)            High Stress               Δgap=+0.2pp  n(YES)=182  ns
+  Eldest (80+)            Utilities Hardship        Δgap=-1.0pp  n(YES)=96  ns
+
+✓ Saved outputs/fig_B_barrier_effect_heatmaps.png
+✓ Saved outputs/fig_C_gap_rates_by_barrier_and_age.png
+
+======================================================================
+SECTION 3 — CONDITION-SPECIFIC ANALYSIS (65+ patients)
+======================================================================
+
+Old (65+) multi-visit traumatic surveyed: n=6,543
+Young (<65) multi-visit traumatic surveyed: n=6,979
+
+  Femur | 65+ (Older)  (n=767)
+    Base long gap rate : 35.2%
+    Base ED visit rate : 8.9%
+    Transport Barrier     : gap=18.2% (+-17.0pp), ED=18.2% (+9.3pp)  [n_barrier=22]
+    Food Insecurity       : gap=14.3% (+-20.9pp), ED=9.5% (+0.7pp)  [n_barrier=21]
+    Financial Strain      : gap=5.0% (+-30.2pp), ED=10.0% (+1.1pp)  [n_barrier=20]
+    Housing Instability   : gap=29.7% (+-5.5pp), ED=10.9% (+2.1pp)  [n_barrier=64]
+
+  Femur | <65 (Younger)  (n=214)
+    Base long gap rate : 33.6%
+    Base ED visit rate : 10.7%
+    Food Insecurity       : gap=30.0% (+-3.6pp), ED=5.0% (+-5.7pp)  [n_barrier=20]
+    Financial Strain      : gap=60.0% (+26.4pp), ED=0.0% (+-10.7pp)  [n_barrier=5]
+    Housing Instability   : gap=37.5% (+3.9pp), ED=6.2% (+-4.5pp)  [n_barrier=16]
+
+  Lower Leg | 65+ (Older)  (n=1,273)
+    Base long gap rate : 25.0%
+    Base ED visit rate : 9.8%
+    Transport Barrier     : gap=37.0% (+12.1pp), ED=22.2% (+12.4pp)  [n_barrier=27]
+    Food Insecurity       : gap=28.9% (+3.9pp), ED=15.6% (+5.7pp)  [n_barrier=45]
+    Financial Strain      : gap=19.0% (+-5.9pp), ED=14.3% (+4.5pp)  [n_barrier=21]
+    Housing Instability   : gap=22.9% (+-2.1pp), ED=10.4% (+0.6pp)  [n_barrier=48]
+
+  Lower Leg | <65 (Younger)  (n=1,484)
+    Base long gap rate : 23.2%
+    Base ED visit rate : 10.6%
+    Transport Barrier     : gap=15.0% (+-8.2pp), ED=17.5% (+6.9pp)  [n_barrier=40]
+    Food Insecurity       : gap=23.0% (+-0.2pp), ED=17.0% (+6.4pp)  [n_barrier=100]
+    Financial Strain      : gap=16.9% (+-6.3pp), ED=16.9% (+6.3pp)  [n_barrier=59]
+    Housing Instability   : gap=22.5% (+-0.7pp), ED=12.5% (+1.9pp)  [n_barrier=80]
+
+  Shoulder | 65+ (Older)  (n=966)
+    Base long gap rate : 21.0%
+    Base ED visit rate : 9.1%
+    Transport Barrier     : gap=0.0% (+-21.0pp), ED=23.1% (+14.0pp)  [n_barrier=26]
+    Food Insecurity       : gap=4.3% (+-16.7pp), ED=21.7% (+12.6pp)  [n_barrier=23]
+    Financial Strain      : gap=9.1% (+-11.9pp), ED=21.2% (+12.1pp)  [n_barrier=33]
+    Housing Instability   : gap=21.8% (+0.8pp), ED=10.9% (+1.8pp)  [n_barrier=55]
+
+  Shoulder | <65 (Younger)  (n=718)
+    Base long gap rate : 19.5%
+    Base ED visit rate : 11.1%
+    Transport Barrier     : gap=35.3% (+15.8pp), ED=11.8% (+0.6pp)  [n_barrier=17]
+    Food Insecurity       : gap=41.2% (+21.7pp), ED=11.8% (+0.6pp)  [n_barrier=34]
+    Financial Strain      : gap=34.4% (+14.9pp), ED=12.5% (+1.4pp)  [n_barrier=32]
+    Housing Instability   : gap=28.0% (+8.5pp), ED=20.0% (+8.9pp)  [n_barrier=25]
+
+  Lumbar | 65+ (Older)  (n=579)
+    Base long gap rate : 21.4%
+    Base ED visit rate : 7.4%
+    Transport Barrier     : gap=12.5% (+-8.9pp), ED=6.2% (+-1.2pp)  [n_barrier=16]
+    Food Insecurity       : gap=14.3% (+-7.1pp), ED=9.5% (+2.1pp)  [n_barrier=21]
+    Financial Strain      : gap=21.1% (+-0.4pp), ED=5.3% (+-2.2pp)  [n_barrier=19]
+    Housing Instability   : gap=6.5% (+-15.0pp), ED=9.7% (+2.3pp)  [n_barrier=31]
+
+  Lumbar | <65 (Younger)  (n=246)
+    Base long gap rate : 20.3%
+    Base ED visit rate : 8.9%
+    Transport Barrier     : gap=33.3% (+13.0pp), ED=16.7% (+7.7pp)  [n_barrier=6]
+    Food Insecurity       : gap=35.7% (+15.4pp), ED=14.3% (+5.3pp)  [n_barrier=14]
+    Financial Strain      : gap=40.0% (+19.7pp), ED=6.7% (+-2.3pp)  [n_barrier=15]
+    Housing Instability   : gap=21.4% (+1.1pp), ED=35.7% (+26.8pp)  [n_barrier=14]
+
+✓ Saved outputs/fig_D_condition_sdoh_heatmap_65plus.png
+✓ Saved outputs/fig_E_old_vs_young_fracture_barrier.png
+
+======================================================================
+SECTION 4 — STRATIFIED LOGISTIC REGRESSION + INTERACTION MODEL
+======================================================================
+Stratified: separate LR in Young (<65) vs Old (65+)
+Interaction: one model with IsOld × SDOH terms — do effects amplify with age?
+
+Full model dataset: n=13,522
+  Old (65+): n=6,543  (48%)
+  Young (<65): n=6,979
+
+  LR — Long Gap (Young <65)  : CV AUC = 0.677 ± 0.012
+  LR — Long Gap (Old  65+)   : CV AUC = 0.617 ± 0.016
+
+  SDOH Odds Ratios — Young (<65) vs Old (65+):
+  SDOH Factor                OR Young    OR Old      Δ OR  Interpretation
+  --------------------------------------------------------------------------------
+  Transport Barrier             0.936     0.970   +0.034  Stronger in elderly
+  Food Insecurity               1.033     0.966   -0.066  Stronger in young
+  Financial Strain              0.959     0.974   +0.015  Stronger in elderly
+  Housing Instability           1.056     0.970   -0.086  Stronger in young
+  High Stress                   1.039     0.996   -0.043  Stronger in young
+  Utilities Hardship            1.036     1.011   -0.024  Stronger in young
+
+--- Interaction Model: IsOld × SDOH (does age amplify the SDOH effect?) ---
+  Interaction model CV AUC: 0.653 ± 0.010
+
+  Interaction term ORs (IsOld × SDOH factor — OR > 1 means effect is stronger in elderly):
+    Transport Barrier       : OR=1.023  (≈ Similar)
+    Financial Strain        : OR=1.017  (≈ Similar)
+    Utilities Hardship      : OR=0.977  (≈ Similar)
+    High Stress             : OR=0.963  (≈ Similar)
+    Food Insecurity         : OR=0.958  (≈ Similar)
+    Housing Instability     : OR=0.933  (↓ WEAKER in elderly)
+
+✓ Saved outputs/fig_F_stratified_OR_and_interactions.png
+✓ Saved outputs/fig_G_elderly_risk_profile.png
+
+======================================================================
+FINAL SUMMARY — AGE-STRATIFIED SDOH ANALYSIS
+======================================================================
+
+Highest long gap rate in elderly:
+  High Stress in Eldest (80+): 20.9% (baseline 20.7%)
+
+Strongest ED substitution effect in elderly:
+  Financial Strain in Older (65-79): ED rate 8.4% → 15.3% (+6.9pp)
+
+Interaction model — SDOH effects amplified in elderly (OR > 1):
+  Transport Barrier       : OR=1.023
+  Financial Strain        : OR=1.017
+
+Interaction model — SDOH effects weaker in elderly (OR < 1):
+  Utilities Hardship      : OR=0.977
+  High Stress             : OR=0.963
+  Food Insecurity         : OR=0.958
+  Housing Instability     : OR=0.933
+
+MODEL DRAWBACKS (for presentation discussion):
+  1. SDOH survey bias    : Only surveyed patients included (77.9% of journeys).
+                           Non-respondents may have MORE barriers — the analysis
+                           likely underestimates SDOH effects.
+  2. Small elderly-SDOH n: Some age × SDOH cells have n < 30. Effect sizes in
+                           those cells have wide confidence intervals (not shown).
+  3. AUC ~ 0.65          : Models are moderately predictive. Missing: insurance
+                           type, distance from hospital, fracture severity score,
+                           comorbidity count.
+  4. Interaction ORs     : Interaction terms are adjusted for age, fracture type,
+                           and race — but not for comorbidities (older patients
+                           have more comorbidities that correlate with both
+                           barriers and outcomes).
+  5. Cross-sectional     : This is not a longitudinal RCT. Causality cannot be
+                           proven — only associations are shown.
+  6. Race composition    : The dataset is majority White (80%+). Effects for
+                           minority groups are directionally correct but
+                           imprecise due to small subgroup sizes.
+
+OUTPUT FIGURES
+  outputs/fig_A_sdoh_prevalence_by_age.png
+  outputs/fig_B_barrier_effect_heatmaps.png
+  outputs/fig_C_gap_rates_by_barrier_and_age.png
+  outputs/fig_D_condition_sdoh_heatmap_65plus.png
+  outputs/fig_E_old_vs_young_fracture_barrier.png
+  outputs/fig_F_stratified_OR_and_interactions.png
+  outputs/fig_G_elderly_risk_profile.png
+
+=== DONE — check logs/06_age_stratified_sdoh.txt and outputs/ ===
