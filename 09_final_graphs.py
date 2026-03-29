@@ -33,7 +33,6 @@ plt.rcParams.update({
     "axes.spines.right": False,
     "axes.grid":         True,
     "grid.alpha":        0.2,
-    "grid.axis":         "y",
 })
 
 BLUE   = "#4C9BE8"
@@ -157,7 +156,6 @@ ax.yaxis.set_major_formatter(mticker.FuncFormatter(lambda v, _: f"{v:+.0f}pp"))
 ax.legend(fontsize=10, framealpha=0.9)
 ax.set_title("SDOH Barriers Raise Gap Risk in Young Patients,\nbut Lower It in Elderly Patients",
              fontsize=13, fontweight="bold", pad=12)
-plt.rcParams["grid.axis"] = "y"
 ax.grid(axis="y", alpha=0.2)
 
 fig.text(0.5, -0.02,
